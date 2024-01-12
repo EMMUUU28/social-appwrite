@@ -8,6 +8,8 @@ import {
   FormMessage,
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
+import { createUserAccount } from "@/lib/appwrite/api";
+import { appwriteConfig } from "@/lib/appwrite/config";
 import { SignupSchema } from "@/lib/validation";
 
 import { zodResolver } from "@hookform/resolvers/zod"
@@ -31,22 +33,20 @@ const SignupForm = () => {
 
 
   async function onSubmit(values: z.infer<typeof SignupSchema>) {
-    // Do something with the form values.
-    // ✅ This will be type-safe and validated.
-    // const newuser = await createUserAccount(values);
-    console.log(values)
+    const newuser = await createUserAccount(values);
+    console.log(newuser)
   }
 
 
   return (
     
       <Form  {...form}>
-        <div className=" sm:w-350    flex-center flex-col  ">
+        <div className=" sm:w-420     flex-center flex-col  ">
           <img className="sm:mb-5" src="/assets/images/logo.svg" alt=""></img>
           <p className="h3-bold md:h4-bold pt:5  ">Create a new Account</p>
-          <p className="text-light-3 pt-4 small-medium md:base-regular ">Enter you details to sign up</p>
+          <p className="text-light-3 pt-4 small-medium md:base-regular ">Enter you details to create a new account</p>
         
-      <form  onSubmit={form.handleSubmit(onSubmit)} className="flex-col gap-5 w-full  mt-4 ">
+      <form  onSubmit={form.handleSubmit(onSubmit)} className=" flex flex-col w-full ">
         <FormField 
           control={form.control}
           name="name"
@@ -54,10 +54,10 @@ const SignupForm = () => {
             <FormItem className="pb-4">
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input className="shad-input " placeholder="name" {...field} />
+                <Input type="text" className="shad-input " placeholder="name" {...field} />
               </FormControl>
               
-              <FormMessage />
+              <FormMessage className= "text-red"/>
             </FormItem>
           )}
         />
@@ -68,9 +68,9 @@ const SignupForm = () => {
             <FormItem className="pb-4">
               <FormLabel>Username</FormLabel>
               <FormControl>
-                <Input className=" shad-input" placeholder="username" {...field} />
+                <Input type="text"  className=" shad-input" placeholder="" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className= "text-red" />
             </FormItem>
           )}
         />
@@ -81,9 +81,9 @@ const SignupForm = () => {
             <FormItem className="pb-4">
               <FormLabel>Email</FormLabel>
               <FormControl>
-                <Input className="shad-input" placeholder="example@example.com" {...field} />
+                <Input  className="shad-input" placeholder="example@example.com" {...field} />
               </FormControl>
-              <FormMessage />
+              <FormMessage className= "text-red" />
             </FormItem>
           )}
         />
@@ -94,9 +94,9 @@ const SignupForm = () => {
             <FormItem className="pb-4">
               <FormLabel>Password</FormLabel>
               <FormControl>
-                <Input className="shad-input"  {...field} />
+                <Input autoComplete="current-password" type="password" className="shad-input"  {...field} />
               </FormControl>
-              <FormMessage className="" />
+              <FormMessage className= "text-red" />
             </FormItem>
           )}
         />

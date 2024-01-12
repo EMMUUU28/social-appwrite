@@ -8,4 +8,5 @@ export const SignupSchema = z.object({
     }),
     email: z.string().email({message:"Should be a valid email"}),
     password: z.string().min(8,{message:"Length is too short"}),
+    
   })
