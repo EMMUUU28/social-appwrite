@@ -9,9 +9,7 @@ import {
 } from "@/components/ui/form"
 import { Input } from "@/components/ui/input";
 import { createUserAccount } from "@/lib/appwrite/api";
-import { appwriteConfig } from "@/lib/appwrite/config";
 import { SignupSchema } from "@/lib/validation";
-
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
@@ -54,9 +52,8 @@ const SignupForm = () => {
             <FormItem className="pb-4">
               <FormLabel>Name</FormLabel>
               <FormControl>
-                <Input type="text" className="shad-input " placeholder="name" {...field} />
+                <Input  type="text" className="shad-input " placeholder="name" {...field} />
               </FormControl>
-              
               <FormMessage className= "text-red"/>
             </FormItem>
           )}
