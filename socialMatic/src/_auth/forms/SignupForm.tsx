@@ -13,11 +13,16 @@ import { SignupSchema } from "@/lib/validation";
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
+import { useToast } from "@/components/ui/use-toast"
+import { createUserAccountMutation, useSigninAccount } from "@/lib/react-query/queriesMutations";
 
 
 const SignupForm = () => {
 
   
+  const { toast } = useToast()
+  const {mutateAsync: createUserAccount} = createUserAccountMutation()
+  const {mutateAsync: signinAccount } = useSigninAccount()
 
   const form = useForm<z.infer<typeof SignupSchema>>({
     resolver: zodResolver(SignupSchema),
@@ -32,6 +37,24 @@ const SignupForm = () => {
 
   async function onSubmit(values: z.infer<typeof SignupSchema>) {
     const newuser = await createUserAccount(values);
+    const session = await signinAccount({email: values.email,password: values.password});
+
+    if(!session){
+      return toast({
+        
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.", 
+          }) 
+    }
+    if(!newuser){
+      return toast({
+        
+        variant: "destructive",
+        title: "Uh oh! Something went wrong.",
+        description: "There was a problem with your request.", 
+          }) 
+    }
     console.log(newuser)
   }
 

@@ -1,7 +1,6 @@
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatars, databases } from "./config";
 import { Account, ID } from 'appwrite';
-import { log } from "console";
 
 export async function createUserAccount(user:INewUser){
     try {
@@ -45,6 +44,17 @@ export async function saveUserToDB(user:
             ID.unique(),
             user
         )
+    } catch (error) {
+        console.log(error);
+        
+    }
+}
+
+export async function signinAccount(user:{email:string, password:string}){
+
+    try {
+        const session = await account.createEmailSession(user.email,user.password)
+        return session;
     } catch (error) {
         console.log(error);
         
