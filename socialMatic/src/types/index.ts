@@ -1,3 +1,6 @@
+
+
+
 export type INavLink = {
   imgURL: string;
   route: string;
@@ -47,3 +50,11 @@ export type INewUser = {
   email: string;
   password: string;
 };
+
+export type IContextType = {
+  user:IUser;
+  isAuthenticated:boolean;
+  setUser:React.Dispatch<React.SetStateAction<IUser>>;
+  setIsAuthenticated:React.Dispatch<React.SetStateAction<boolean>>;
+  checkAuthUser: () =>  Promise<boolean>;
+}
